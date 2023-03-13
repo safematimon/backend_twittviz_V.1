@@ -14,7 +14,7 @@
     ],
     "crons": [
       {
-      "path": "/api/update_trends",
+      "path": "/api/update-trends",
       "schedule": "* * * * *"
       }
     ]
