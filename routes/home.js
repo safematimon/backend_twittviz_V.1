@@ -55,7 +55,7 @@ router.get('/update-trends', async (req, res, next) => {
       item.no = index+1;
     });
 
-    Trend.insertMany(datatemp)
+    await Trend.insertMany(datatemp);
     console.log("Data inserted",new Date(),">",formattedDate)  // Success
     
     res.status(200).send("inserted");
