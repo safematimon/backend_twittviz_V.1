@@ -19,7 +19,7 @@ app.use(morgan('dev'));
 
 mongoose.Promise = global.Promise;
 mongoose.set('strictQuery', false);
-mongoose.connect('mongodb+srv://admin:1234@cluster0.hv7pxi6.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://other:1234@cluster0.hv7pxi6.mongodb.net/?retryWrites=true&w=majority')
         .then(() => console.log('connect dai leaw'))
         .catch((err) => console.error(err));
 

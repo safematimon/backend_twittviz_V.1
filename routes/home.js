@@ -36,7 +36,7 @@ router.get('/trends', async (req, res, next) => {
   }
 });
 
-router.post('/update-trends', async (req, res, next) => {
+router.get('/update-trends', async (req, res, next) => {
   try {
     const id = 1
     const data = await client.get('trends/place.json', {id})
