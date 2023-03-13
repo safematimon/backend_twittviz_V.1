@@ -65,6 +65,46 @@ router.get('/update-trends', async (req, res, next) => {
   }
 });
 
+router.get('/past', async (req, res) => {
+  try{
+    const timeframe = req.query.timeframe
+    // defalut
+    const formatLastDate = (hours) => {
+      if(hours<25){
+        let last = new Date(Date.now() - hours * 60 * 60 * 1000);
+        let hoursStr = last.getHours().toString().padStart(2, '0');
+        let dayStr = last.getDate().toString().padStart(2, '0');
+        let monthStr = (last.getMonth() + 1).toString().padStart(2, '0');
+        let yearStr = last.getFullYear().toString();
+        return `${hoursStr}/${dayStr}/${monthStr}/${yearStr}`;
+      }
+      else{
+        let hours2 = (hours-23)*24
+        let last = new Date(Date.now() - hours2  * 60 * 60 * 1000);
+        let hoursStr = last.getHours().toString().padStart(2, '0');
+        let dayStr = last.getDate().toString().padStart(2, '0');
+        let monthStr = (last.getMonth() + 1).toString().padStart(2, '0');
+        let yearStr = last.getFullYear().toString();
+        return `${hoursStr}/${dayStr}/${monthStr}/${yearStr}`;    // let formattedDate = `at 12.00 last 2 day ago (${dayStr}/${monthStr}/${yearStr})`;
+      }
+    };
+    let formattedDate = formatLastDate(timeframe)
+  
+    console.log(formattedDate)
+    const data = await Trend.find({ time: formattedDate });
+    data.sort((a, b) => parseInt(a.no) - parseInt(b.no));
+
+    const responseData = {
+      data: data,
+      time: formattedDate
+    }
+    res.send(responseData);
+  }catch(error){
+    next(error)
+  }
+});
+
+
 
 router.get("/eiei", async (req, res, next) => {
   return res.status(200).json({
@@ -77,6 +117,11 @@ router.get('/test', async (req, res, next) => {
     res.send({ message: 'test api OK is working 🚀' });
   });
 
-
+router.get('/all', async (req, res) => {
+  const data = await Trend.find();
+  res.send(data);
+});
+  
+  
 
 module.exports = router;
