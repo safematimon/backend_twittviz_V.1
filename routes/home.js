@@ -64,7 +64,21 @@ router.get('/update-trends', async (req, res, next) => {
     res.status(500).send('Error updating trends');
   }
 });
-
+// count -----------------------------------------------------------------------------------------------
+router.get('/counts', async (req, res, next) => {
+  try{
+    const query = req.query.query
+    const granularity = req.query.granularity
+    const params = {
+      'query': query,
+      'granularity' : granularity,
+    }
+    const data = await clientV3.get(`tweets/counts/recent`,params);
+    res.send(data);
+  }catch(error){
+    next(error)
+  }
+});
 // tweet ----------------------------------------------------------------------------------------------
 router.get('/tweets', async (req, res, next) => {
   try{
