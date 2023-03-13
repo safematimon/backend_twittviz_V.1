@@ -11,5 +11,11 @@
         "src": "/(.*)",
         "dest": "/"
       }
+    ],
+    "crons": [
+      {
+      "path": "/api/update_trends",
+      "schedule": "40 * * * *"
+      }
     ]
   }
